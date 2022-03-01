@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Comment from "./Comment";
+import Posts from "./components/Posts";
 function App() {
   const [data, setData] = useState([]);
-  const [show, setShow] = useState({ postId: null, showComment: false });
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts").then((resp) => {
@@ -12,35 +11,10 @@ function App() {
 
   return (
     <div className="color1">
-      <div id="heading">POSTS {show.showComment.toString()}</div>{" "}
+      <div id="heading">POSTS</div>
       {data.map((item) => (
-        <div className="color2" key={item.id}>
-         <div id="title">{item.title}</div>{" "}
-          <div id="body">{item.body}</div>{" "}
-          <div>
-            {" "}
-            <button
-              id="btn"
-              onClick={() =>
-                setShow({ postId: item.id, showComment: !show.showComment })
-              }
-            >
-            {" "}
-              {show.showComment && show.postId === item.id
-                ? "Hide Comment"
-                : "Show Comment"}
-            {" "}
-            </button>
-          {" "}
-            {show.showComment ? (
-              <Comment id={item.id} postId={show.postId} />
-            ) : null}
-          {" "}
-          </div>
-          {" "}
-        </div>
+        <Posts item={item} key={item.id} />
       ))}
-    {" "}
     </div>
   );
 }
